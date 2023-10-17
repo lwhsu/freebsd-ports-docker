@@ -1,7 +1,6 @@
 PORTNAME=		docker
-PORTVERSION=		18.09.5
+PORTVERSION=		23.0.7
 DISTVERSIONPREFIX=	v
-PORTREVISION=		14
 CATEGORIES=		sysutils
 
 MAINTAINER=		joneum@FreeBSD.org
@@ -15,18 +14,17 @@ BROKEN_aarch64=		fails to build: golang.org/x/sys/unix/cap_freebsd.go:18:23: und
 PLIST_FILES=		bin/docker
 
 USE_GITHUB=		yes
-GH_PROJECT=		docker-ce
+GH_PROJECT=		cli
 
 USES=	cpe go
 
 CONFLICTS_INSTALL=	docker-tray # bin/docker
 
-GO_PKGNAME=	github.com/${PORTNAME}
-GO_TARGET=	${GO_PKGNAME}/cli/cmd/docker
+GO_PKGNAME=	docker
+GO_TARGET=	./cmd/docker
 
 pre-build:
-		@${MV} ${GO_WRKSRC}/components/* ${GO_WRKSRC}/
 		@${CP} ${FILESDIR}/default_store_freebsd.go \
-			${GO_WRKSRC}/cli/cli/config/credentials/
+			${GO_WRKSRC}/cli/config/credentials/
 
 .include <bsd.port.mk>
